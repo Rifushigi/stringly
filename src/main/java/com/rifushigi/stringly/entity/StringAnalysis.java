@@ -2,11 +2,13 @@ package com.rifushigi.stringly.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
 @AllArgsConstructor
+@Data
 public class StringAnalysis {
 
     private String id;
