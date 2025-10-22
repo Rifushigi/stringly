@@ -5,7 +5,7 @@ import java.util.List;
 
 public record FilteredAnalysisResponse(
         List<StringAnalysisResponse> data,
-        String count,
+        Integer count,
         @JsonProperty(value = "filters_applied")
         ParseResult filtersApplied
 ) {
