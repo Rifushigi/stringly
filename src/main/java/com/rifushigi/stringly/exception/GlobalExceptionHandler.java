@@ -77,11 +77,29 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Map<String, String>> handleConflict(
+            ConflictException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        error.put("timestamp", LocalDateTime.now().toString());
+        return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(BadQueryException.class)
+    public ResponseEntity<Map<String, String>> handleBadQuery(
+            BadQueryException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        error.put("timestamp", LocalDateTime.now().toString());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(
             Exception ex){
         Map<String, String> error = new HashMap<>();
-        error.put("error", "Internal server error");
+        error.put("error", "Internal server message");
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
