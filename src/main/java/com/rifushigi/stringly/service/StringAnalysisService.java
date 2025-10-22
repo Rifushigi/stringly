@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StringAnalysisService {
 
-    private StringAnalysisRepository repository;
+    private final StringAnalysisRepository repository;
 
     public StringAnalysis analyseString(String value) {
         String sha256Hash = computeSha256Hash(value);
