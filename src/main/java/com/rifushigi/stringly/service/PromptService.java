@@ -3,6 +3,8 @@ package com.rifushigi.stringly.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rifushigi.stringly.dto.ParseResult;
+import com.rifushigi.stringly.exception.BadQueryException;
+import com.rifushigi.stringly.exception.ConflictException;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -28,6 +30,8 @@ public class PromptService implements LLMService{
         'palindromic strings that contain the letter a' -> {"is_palindrome": true, "contains_character": "a"}
 
         If none apply, return an empty JSON: {}
+        If the query parsed but resulted in conflicting filters, return a json object : {"status": 422, "message": "Query parsed but resulted in conflicting filters"}
+        If unable to parse natural language query to a valid filter(s), return {"status": 400, "message":"Unable to parse natural language query"}
         """;
 
 
@@ -51,8 +55,17 @@ public class PromptService implements LLMService{
         String json = response.getResult().getOutput().getText();
 
         try{
-            return mapper.readValue(json, ParseResult.class);
+            ParseResult result =  mapper.readValue(json, ParseResult.class);
+            if (result.error().status() == 422){
+                throw new ConflictException(result.error().message());
+            }
+            if (result.error().status() == 400){
+                throw new BadQueryException("Unable to parse natural language query");
+            }
+            return result;
         } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
