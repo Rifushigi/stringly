@@ -79,7 +79,7 @@ public class StringAnalysisService {
     }
 
     private Boolean computeIsPalindrome(String value) {
-        String cleaned = value.toLowerCase().replaceAll("\\s+", "");
+        String cleaned = value.toLowerCase();
         String reversed = new StringBuilder(cleaned).reverse().toString();
         return cleaned.equals(reversed);
     }
@@ -89,13 +89,17 @@ public class StringAnalysisService {
     }
 
     private Integer computeWordCount(String value) {
-        return value.trim().split("\\s+").length;
+        String trimmed = value.trim();
+        if (trimmed.isEmpty()) {
+            return 0;
+        }
+        return trimmed.split("\\s+").length;
     }
 
     private String computeSha256Hash(String value) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest();
+            byte[] hash = digest.digest(value.getBytes());
             StringBuilder hexString = new StringBuilder();
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
@@ -114,7 +118,6 @@ public class StringAnalysisService {
         Map<String, Integer> frequencyMap = new HashMap<>();
         for (char c : value.toCharArray()) {
             String key = String.valueOf(c);
-            if(key == " "){continue;}
             frequencyMap.put(key, frequencyMap.getOrDefault(key, 0) + 1);
         }
         return frequencyMap;
