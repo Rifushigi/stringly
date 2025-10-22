@@ -114,6 +114,7 @@ public class StringAnalysisService {
         Map<String, Integer> frequencyMap = new HashMap<>();
         for (char c : value.toCharArray()) {
             String key = String.valueOf(c);
+            if(key == " "){continue;}
             frequencyMap.put(key, frequencyMap.getOrDefault(key, 0) + 1);
         }
         return frequencyMap;
