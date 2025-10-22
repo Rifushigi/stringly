@@ -44,4 +44,8 @@ public class StringAnalysisRepository {
                 .filter(s -> containsCharacter == null || s.getValue().toLowerCase().contains(containsCharacter.toLowerCase()))
                 .toList();
     }
+
+    public void deleteAll() {
+        storage.clear();
+    }
 }
