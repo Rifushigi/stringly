@@ -100,6 +100,7 @@ public class GlobalExceptionHandler {
             Exception ex){
         Map<String, String> error = new HashMap<>();
         error.put("error", "Internal server message");
+        error.put("message", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
