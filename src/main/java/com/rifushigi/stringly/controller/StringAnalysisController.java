@@ -25,6 +25,7 @@ public class StringAnalysisController {
 
     @PostMapping
     public ResponseEntity<StringAnalysisResponse> analyseString(@Valid @RequestBody StringRequest request){
+
         StringAnalysis analysis = sas.analyseString(request.value());
         StringAnalysisResponse response = new StringAnalysisResponse(analysis);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -74,7 +75,7 @@ public class StringAnalysisController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/string_value")
+    @DeleteMapping("/{string_value}")
     public ResponseEntity<Void> deleteString(@PathVariable("string_value") String stringValue){
         sas.deleteByValue(stringValue);
 
