@@ -61,14 +61,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(StringAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleStringAlreadyExists(){
+    public ResponseEntity<Map<String, String>> handleStringAlreadyExists(
+            StringAlreadyExistsException ex
+    ){
         Map<String, String> error = new HashMap<>();
         error.put("error", "String already exists in the system");
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(StringNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleStringNotFound(){
+    public ResponseEntity<Map<String, String>> handleStringNotFound(
+            StringNotFoundException ex
+    ){
         Map<String, String> error = new HashMap<>();
         error.put("error", "String does not exist in the system");
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
