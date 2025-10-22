@@ -2,6 +2,7 @@ package com.rifushigi.stringly.service;
 
 import com.rifushigi.stringly.entity.StringAnalysis;
 import com.rifushigi.stringly.exception.StringAlreadyExistsException;
+import com.rifushigi.stringly.exception.StringNotFoundException;
 import com.rifushigi.stringly.repository.StringAnalysisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ public class StringAnalysisService {
 
     private StringAnalysisRepository repository;
 
-    public StringAnalysis analyseString(String value){
+    public StringAnalysis analyseString(String value) {
         String sha256Hash = computeSha256Hash(value);
 
         Optional<StringAnalysis> existing = repository.findById(sha256Hash);
-        if(existing.isPresent()){
+        if (existing.isPresent()) {
             throw new StringAlreadyExistsException("String already exists in the system");
         }
 
@@ -40,55 +41,65 @@ public class StringAnalysisService {
         return repository.save(analysis);
     }
 
-    public Optional <StringAnalysis> findByValue(String value){
+    public Optional<StringAnalysis> findByValue(String value) {
         String hash = computeSha256Hash(value);
-        return repository.findById(hash);
+        Optional<StringAnalysis> result = repository.findById(hash);
+
+        if (result.isPresent()) {
+            return result;
+        }
+
+        throw new StringNotFoundException("String does not exist in the system");
     }
 
     public List<StringAnalysis> findWithFilters(Boolean isPalindrome, Integer minLength, Integer maxLength,
-                                                Integer wordCount, String containsCharacter){
+                                                Integer wordCount, String containsCharacter) {
+        if (isPalindrome == null && minLength == null && maxLength == null &&
+                wordCount == null && containsCharacter == null) {
+                return findAll();
+        }
         return repository.findWithFilters(isPalindrome, minLength, maxLength, wordCount, containsCharacter);
     }
 
-    public List<StringAnalysis> findAll(){
+    public List<StringAnalysis> findAll() {
         return repository.findAll();
     }
 
-    public Boolean deleteByValue(String value){
+    public void deleteByValue(String value) {
         String hash = computeSha256Hash(value);
-        if (repository.existsById(hash)){
+        if (repository.existsById(hash)) {
             repository.deleteById(hash);
-            return true;
+            return;
         }
-        return false;
+        throw new StringNotFoundException("String does not exists in the system");
     }
 
-    private Integer computeLength(String value){
+    private Integer computeLength(String value) {
         return value.length();
     }
 
-    private Boolean computeIsPalindrome(String value){
+    private Boolean computeIsPalindrome(String value) {
         String cleaned = value.toLowerCase().replaceAll("\\s+", "");
         String reversed = new StringBuilder(cleaned).reverse().toString();
         return cleaned.equals(reversed);
     }
 
-    private Integer computeUniqueCharacters(String value){
+    private Integer computeUniqueCharacters(String value) {
         return (int) value.chars().distinct().count();
     }
 
-    private Integer computeWordCount(String value){
+    private Integer computeWordCount(String value) {
         return value.trim().split("\\s+").length;
     }
 
-    private String computeSha256Hash(String value){
-        try{
+    private String computeSha256Hash(String value) {
+        try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest();
             StringBuilder hexString = new StringBuilder();
-            for(byte b : hash){
+            for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
-                if(hex.length()==1){
+                if (hex.length() == 1) {
                     hexString.append('0');
                 }
                 hexString.append(hex);
@@ -99,9 +110,9 @@ public class StringAnalysisService {
         }
     }
 
-    private Map<String, Integer> computeCharacterFrequencyMap(String value){
+    private Map<String, Integer> computeCharacterFrequencyMap(String value) {
         Map<String, Integer> frequencyMap = new HashMap<>();
-        for(char c : value.toCharArray()) {
+        for (char c : value.toCharArray()) {
             String key = String.valueOf(c);
             frequencyMap.put(key, frequencyMap.getOrDefault(key, 0) + 1);
         }
