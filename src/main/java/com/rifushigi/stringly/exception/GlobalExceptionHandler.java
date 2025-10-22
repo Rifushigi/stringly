@@ -1,19 +1,36 @@
 package com.rifushigi.stringly.exception;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidJson(
+            HttpMessageNotReadableException ex){
+        Throwable cause = ex.getCause();
+        String message = "Invalid or malformed JSON request";
+        if(cause instanceof MismatchedInputException mismatchEx){
+            message = "Type mismatch: " + mismatchEx.getOriginalMessage();
+        }
+        Map<String, String> error = new HashMap<>();
+        error.put("error",  message);
+        error.put("timestamp", LocalDateTime.now().toString());
+        return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
