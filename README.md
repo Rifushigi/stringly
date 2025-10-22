@@ -1,6 +1,3 @@
-Based on the project structure and code, here's a comprehensive README.md:
-
-```markdown
 # Stringly - String Analysis API
 
 A RESTful API service for analyzing and managing string data with advanced filtering capabilities, including natural language query processing powered by LLM integration.
@@ -252,10 +249,4 @@ Application properties can be configured in:
 ## License
 
 [Specify your license here]
-
-## Contact
-
-[Your contact information]
-```
-This README provides comprehensive documentation for your Stringly API project, including all endpoints, request/response formats, setup instructions, and key features. You can customize the license, contact information, and repository URL sections as needed.
 ```
