@@ -1,7 +1,6 @@
 package com.rifushigi.stringly.exception;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -62,16 +61,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(StringAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleStringAlreadyExists(
-            StringAlreadyExistsException ex){
+    public ResponseEntity<Map<String, String>> handleStringAlreadyExists(){
         Map<String, String> error = new HashMap<>();
         error.put("error", "String already exists in the system");
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(StringNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleStringNotFound(
-            StringNotFoundException ex){
+    public ResponseEntity<Map<String, String>> handleStringNotFound(){
         Map<String, String> error = new HashMap<>();
         error.put("error", "String does not exist in the system");
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
