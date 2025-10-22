@@ -1,6 +1,7 @@
 package com.rifushigi.stringly.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rifushigi.stringly.entity.StringAnalysis;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -32,4 +33,19 @@ public record StringAnalysisResponse(
             @JsonProperty("character_frequency_map")
             Map<String, Integer> characterFrequencyMap
     ){}
+
+    public StringAnalysisResponse(StringAnalysis analysis){
+        this(
+                analysis.getId(), analysis.getValue(),
+                new Properties(
+                        analysis.getLength(),
+                        analysis.getIsPalindrome(),
+                        analysis.getUniqueCharacters(),
+                        analysis.getWordCount(),
+                        analysis.getSha256Hash(),
+                        analysis.getCharacterFrequencyMap()
+                ),
+                analysis.getCreatedAt()
+        );
+    }
 }
