@@ -1,8 +1,6 @@
 package com.rifushigi.stringly.repository;
 
 import com.rifushigi.stringly.entity.StringAnalysis;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,10 +32,6 @@ public class StringAnalysisRepository {
 
     public void deleteById(String id){
         storage.remove(id);
-    }
-
-    public void deleteAll(){
-        storage.clear();
     }
 
     public List<StringAnalysis> findWithFilters(Boolean isPalindrome, Integer minLength,
