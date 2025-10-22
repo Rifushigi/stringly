@@ -1,11 +1,11 @@
 package com.rifushigi.stringly.service;
 
 import com.rifushigi.stringly.entity.StringAnalysis;
+import com.rifushigi.stringly.exception.StringAlreadyExistsException;
 import com.rifushigi.stringly.repository.StringAnalysisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class StringAnalysisService {
 
         Optional<StringAnalysis> existing = repository.findById(sha256Hash);
         if(existing.isPresent()){
-            return existing.get();
+            throw new StringAlreadyExistsException("String already exists in the system");
         }
 
         Integer length = computeLength(value);
