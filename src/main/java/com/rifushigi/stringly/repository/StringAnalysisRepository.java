@@ -1,13 +1,16 @@
 package com.rifushigi.stringly.repository;
 
 import com.rifushigi.stringly.entity.StringAnalysis;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
+@Repository
 public class StringAnalysisRepository {
 
     private final Map<String, StringAnalysis> storage = new ConcurrentHashMap<>();
