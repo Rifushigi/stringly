@@ -41,7 +41,7 @@ A RESTful API service for analyzing and managing string data with advanced filte
 1. Clone the repository:
 ```
 bash
-git clone <repository-url>
+git clone https://github.com/Rifushigi/stringly.git
 cd stringly
 ```
 2. Build the project:
@@ -196,9 +196,9 @@ The API returns appropriate HTTP status codes and error messages:
 
 ```
 src/main/java/com/rifushigi/stringly/
-├── controller/          # REST controllers
+├── controller/          # REST controller
 ├── dto/                 # Data Transfer Objects
-├── entity/              # JPA entities
+├── entity/              # entities
 ├── exception/           # Custom exceptions and global error handler
 ├── repository/          # Data access layer
 ├── service/             # Business logic
@@ -226,7 +226,7 @@ Application properties can be configured in:
 ### Palindrome Detection
 - Case-insensitive comparison
 - Spaces and special characters are included in the check
-- Example: "RaceCar" → palindrome, "race car" → not a palindrome
+- Example: "RaceCar" → palindrome, "race car" → a palindrome
 
 ### Character Frequency Map
 - Counts all characters including spaces
@@ -246,7 +246,4 @@ Application properties can be configured in:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-[Specify your license here]
 ```
