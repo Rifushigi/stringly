@@ -94,10 +94,11 @@ json
   "created_at": "2025-10-22T10:30:00"
 }
 ```
-```
 
 
 ### 2. Get String Analysis
+
+```
 
 Retrieves analysis for a specific string.
 
@@ -107,7 +108,11 @@ Retrieves analysis for a specific string.
 
 **Response:** `200 OK`
 
+```
+
 ### 3. Filter Strings
+
+```
 
 Retrieves strings with optional filtering criteria.
 
@@ -140,6 +145,8 @@ Retrieves strings with optional filtering criteria.
 
 ### 4. Natural Language Filter
 
+```
+
 Filter strings using natural language queries.
 
 **GET** `/strings/filter-by-natural-language?query={natural_language_query}`
@@ -166,6 +173,8 @@ Filter strings using natural language queries.
 
 
 ### 5. Delete String
+
+```
 
 Deletes a string analysis record.
 
