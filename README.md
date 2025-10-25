@@ -1,6 +1,3 @@
-Based on the project structure and code, here's a comprehensive README.md:
-
-```markdown
 # Stringly - String Analysis API
 
 A RESTful API service for analyzing and managing string data with advanced filtering capabilities, including natural language query processing powered by LLM integration.
@@ -44,7 +41,7 @@ A RESTful API service for analyzing and managing string data with advanced filte
 1. Clone the repository:
 ```
 bash
-git clone <repository-url>
+git clone https://github.com/Rifushigi/stringly.git
 cd stringly
 ```
 2. Build the project:
@@ -97,10 +94,11 @@ json
   "created_at": "2025-10-22T10:30:00"
 }
 ```
-```
 
 
 ### 2. Get String Analysis
+
+```
 
 Retrieves analysis for a specific string.
 
@@ -110,7 +108,11 @@ Retrieves analysis for a specific string.
 
 **Response:** `200 OK`
 
+```
+
 ### 3. Filter Strings
+
+```
 
 Retrieves strings with optional filtering criteria.
 
@@ -143,6 +145,8 @@ Retrieves strings with optional filtering criteria.
 
 ### 4. Natural Language Filter
 
+```
+
 Filter strings using natural language queries.
 
 **GET** `/strings/filter-by-natural-language?query={natural_language_query}`
@@ -169,6 +173,8 @@ Filter strings using natural language queries.
 
 
 ### 5. Delete String
+
+```
 
 Deletes a string analysis record.
 
@@ -199,9 +205,9 @@ The API returns appropriate HTTP status codes and error messages:
 
 ```
 src/main/java/com/rifushigi/stringly/
-├── controller/          # REST controllers
+├── controller/          # REST controller
 ├── dto/                 # Data Transfer Objects
-├── entity/              # JPA entities
+├── entity/              # entities
 ├── exception/           # Custom exceptions and global error handler
 ├── repository/          # Data access layer
 ├── service/             # Business logic
@@ -229,7 +235,7 @@ Application properties can be configured in:
 ### Palindrome Detection
 - Case-insensitive comparison
 - Spaces and special characters are included in the check
-- Example: "RaceCar" → palindrome, "race car" → not a palindrome
+- Example: "RaceCar" → palindrome, "race car" → a palindrome
 
 ### Character Frequency Map
 - Counts all characters including spaces
@@ -249,13 +255,4 @@ Application properties can be configured in:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-[Specify your license here]
-
-## Contact
-
-[Your contact information]
-```
-This README provides comprehensive documentation for your Stringly API project, including all endpoints, request/response formats, setup instructions, and key features. You can customize the license, contact information, and repository URL sections as needed.
 ```
